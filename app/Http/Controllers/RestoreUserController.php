@@ -6,7 +6,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class RestoreUserController extends ProductsController
+class RestoreUserController extends ProductController
 {
     /**
      * Create a new controller instance.
@@ -28,7 +28,7 @@ class RestoreUserController extends ProductsController
      */
     public function userReActivate(Request $request, $token)
     {
-        $userKeys = new ProductsController();
+        $userKeys = new ProductController();
         $sepKey = $userKeys->getSeperationKey();
         $userIdKey = $userKeys->getIdMultiKey();
         $restoreKey = config('settings.restoreKey');

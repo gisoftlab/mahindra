@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {!! trans('usersmanagement.showing-all-users') !!}
+    {!! trans('product.showing-all-products') !!}
 @endsection
 
 @section('template_linked_css')
@@ -32,14 +32,14 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {!! trans('product.showing-all-users') !!}
+                                {!! trans('product.showing-all-products') !!}
                             </span>
 
                             <div class="btn-group pull-right btn-group-xs">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-ellipsis-v fa-fw" aria-hidden="true"></i>
                                     <span class="sr-only">
-                                        {!! trans('product.users-menu-alt') !!}
+                                        {!! trans('product.products-menu-alt') !!}
                                     </span>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right">
@@ -49,7 +49,7 @@
                                     </a>
                                     <a class="dropdown-item" href="/products/deleted">
                                         <i class="fa fa-fw fa-group" aria-hidden="true"></i>
-                                        {!! trans('product.show-deleted-users') !!}
+                                        {!! trans('product.show-deleted-products') !!}
                                     </a>
                                 </div>
                             </div>
@@ -58,14 +58,14 @@
 
                     <div class="card-body">
 
-                        @if(config('usersmanagement.enableSearchUsers'))
+                        @if(config('product.enableSearchUsers'))
                             @include('partials.search-users-form')
                         @endif
 
                         <div class="table-responsive users-table">
                             <table class="table table-striped table-sm data-table">
-                                <caption id="user_count">
-                                    {{ trans_choice('product.table.caption', 1, ['userscount' => $products->count()]) }}
+                                <caption id="product_count">
+                                    {{ trans_choice('product.table.caption', 1, ['productscount' => $products->count()]) }}
                                 </caption>
                                 <thead class="thead">
                                     <tr>
@@ -78,7 +78,7 @@
                                         <th class="no-search no-sort"></th>
                                     </tr>
                                 </thead>
-                                <tbody id="users_table">
+                                <tbody id="product_table">
                                     @foreach($products as $product)
                                         <tr>
                                             <td>{{$product->id}}</td>
@@ -113,7 +113,7 @@
                             </table>
 
                             @if(config('product.enablePagination'))
-{{--                                {{ $product->links() }}--}}
+                                {{ $products->links() }}
                             @endif
 
                         </div>
@@ -128,15 +128,15 @@
 @endsection
 
 @section('footer_scripts')
-    @if ((count($products) > config('usersmanagement.datatablesJsStartCount')) && config('usersmanagement.enabledDatatablesJs'))
+    @if ((count($products) > config('product.datatablesJsStartCount')) && config('product.enabledDatatablesJs'))
         @include('scripts.datatables')
     @endif
     @include('scripts.delete-modal-script')
     @include('scripts.save-modal-script')
-    @if(config('usersmanagement.tooltipsEnabled'))
+    @if(config('product.tooltipsEnabled'))
         @include('scripts.tooltips')
     @endif
-    @if(config('usersmanagement.enableSearchUsers'))
+    @if(config('product.enableSearchUsers'))
         @include('scripts.search-users')
     @endif
 @endsection

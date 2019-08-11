@@ -39,7 +39,7 @@ class Product extends Model
      *
      * @var array
      */
-    public function comment()
+    public function comments()
     {
         return $this->hasMany('App\Models\Comment');
     }

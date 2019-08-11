@@ -27,8 +27,6 @@
                             <a class="dropdown-item {{ Request::is('users/create') ? 'active' : null }}" href="{{ url('/users/create') }}">
                                 {!! trans('titles.adminNewUser') !!}
                             </a>
-                        </div>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item {{ Request::is('products', 'products/' . Auth::user()->id, 'products/' . Auth::user()->id . '/edit') ? 'active' : null }}" href="{{ url('/products') }}">
                                 {!! trans('titles.adminProductList') !!}
@@ -37,18 +35,41 @@
                             <a class="dropdown-item {{ Request::is('products/create') ? 'active' : null }}" href="{{ url('/products/create') }}">
                                 {!! trans('titles.adminNewProduct') !!}
                             </a>
-                        </div>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item {{ Request::is('comment', 'comment/' . Auth::user()->id, 'comment/' . Auth::user()->id . '/edit') ? 'active' : null }}" href="{{ url('/comment') }}">
+                            <a class="dropdown-item {{ Request::is('comments', 'comments/' . Auth::user()->id, 'comments/' . Auth::user()->id . '/edit') ? 'active' : null }}" href="{{ url('/comments') }}">
                                 {!! trans('titles.adminCommentList') !!}
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item {{ Request::is('comment/create') ? 'active' : null }}" href="{{ url('/comment/create') }}">
-                                {!! trans('titles.adminNewComment') !!}
                             </a>
                         </div>
                     </li>
+                @endrole
+                @role('user')
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {!! trans('titles.userDropdownNav') !!}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item {{ Request::is('products', 'products/' . Auth::user()->id, 'products/' . Auth::user()->id . '/edit') ? 'active' : null }}" href="{{ url('/products') }}">
+                            {!! trans('titles.userProductList') !!}
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item {{ Request::is('products', 'products/' . Auth::user()->id, 'products/' . Auth::user()->id . '/edit') ? 'active' : null }}" href="{{ url('/products') }}">
+                            {!! trans('titles.adminProductList') !!}
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item {{ Request::is('products/create') ? 'active' : null }}" href="{{ url('/products/create') }}">
+                            {!! trans('titles.adminNewProduct') !!}
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item {{ Request::is('comment', 'comment/' . Auth::user()->id, 'comment/' . Auth::user()->id . '/edit') ? 'active' : null }}" href="{{ url('/comment') }}">
+                            {!! trans('titles.adminCommentList') !!}
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item {{ Request::is('comment/create') ? 'active' : null }}" href="{{ url('/comment/create') }}">
+                            {!! trans('titles.adminNewComment') !!}
+                        </a>
+                    </div>
+                </li>
                 @endrole
             </ul>
             {{-- Right Side Of Navbar --}}

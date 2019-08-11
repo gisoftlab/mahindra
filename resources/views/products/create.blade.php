@@ -23,22 +23,22 @@
                     <div class="card-body p-0">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-12 col-sm-4 col-md-3 product-sidebar text-white rounded-left-sm-up">
+                                    <div class="col-12 col-sm-4 col-md-3 profile-sidebar text-white rounded-left-sm-up">
                                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                            <a class="nav-link active" data-toggle="pill" href=".edit-product-tab" role="tab" aria-controls="edit-product-tab" aria-selected="true">
-                                                {{ trans('product.editproduct') }}
+                                            <a class="nav-link active" data-toggle="pill" href=".edit-profile-tab" role="tab" aria-controls="edit-profile-tab" aria-selected="true">
+                                                {{ trans('product.createproduct') }}
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-8 col-md-9">
                                         <div class="tab-content" id="v-pills-tabContent">
-                                            <div class="tab-pane fade show active edit-product-tab" role="tabpanel" aria-labelledby="edit-product-tab">
-                                                {!! Form::model($product, ['method' => 'PATCH', 'route' => ['products.update', $product->id], 'id' => 'product_form', 'class' => 'form-horizontal', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                                            <div class="tab-pane fade show active edit-profile-tab" role="tabpanel" aria-labelledby="edit-profile-tab">
+                                                {!! Form::model($product, ['method' => 'POST', 'route' => ['products.store'], 'id' => 'product_form', 'class' => 'form-horizontal', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
                                                     {{ csrf_field() }}
                                                     <div class="form-group has-feedback {{ $errors->has('name') ? ' has-error ' : '' }}">
                                                         {!! Form::label('location', trans('product.label-name') , array('class' => 'col-12 control-label')); !!}
                                                         <div class="col-12">
-                                                            {!! Form::text('name', old('name'), array('id' => 'name', 'class' => 'form-control', 'placeholder' => trans('product.ph-location'))) !!}
+                                                            {!! Form::text('name', old('name'), array('id' => 'name', 'class' => 'form-control', 'placeholder' => trans('profile.ph-location'))) !!}
                                                             <span class="glyphicon {{ $errors->has('location') ? ' glyphicon-asterisk ' : ' glyphicon-pencil ' }} form-control-feedback" aria-hidden="true"></span>
                                                             @if ($errors->has('name'))
                                                                 <span class="help-block">
@@ -62,7 +62,7 @@
                                                     <div class="form-group margin-bottom-2">
                                                         <div class="col-12">
                                                             {!! Form::button(
-                                                                 trans('forms.save-changes'),
+                                                                '<i class="fa fa-fw fa-save" aria-hidden="true"></i> ' . trans('forms.product_button_text'),
                                                                  array(
                                                                     'id'                => 'confirmFormSave',
                                                                     'class'             => 'btn btn-success',
@@ -78,14 +78,15 @@
                                                     </div>
                                                 {!! Form::close() !!}
                                             </div>
-                                        </div>
+
                                     </div>
                                 </div>
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
     @include('modals.modal-form')
 
@@ -101,7 +102,7 @@
             $('.dropdown-menu li').removeClass('active');
         });
 
-        $('.product-trigger').click(function() {
+        $('.profile-trigger').click(function() {
             $('.panel').alterClass('card-*', 'card-default');
         });
 
@@ -130,7 +131,7 @@
             $('#account_save_trigger').attr('disabled', false).removeClass('disabled').show();
         });
 
-        $('#user_product_form').on('keyup change', 'input, select, textarea', function(){
+        $('#user_profile_form').on('keyup change', 'input, select, textarea', function(){
             $('#confirmFormSave').attr('disabled', false).removeClass('disabled').show();
         });
 

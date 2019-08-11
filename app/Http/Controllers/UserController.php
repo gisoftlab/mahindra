@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Auth;
 
 class UserController extends Controller
@@ -24,11 +25,12 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $products = Product::paginate(config('usersmanagement.paginateListSize'));
 
         if ($user->isAdmin()) {
-            return view('pages.admin.home');
+            return View('pages.admin.home', compact('products'));
         }
 
-        return view('pages.user.home');
+        return View('pages.user.home', compact('products'));
     }
 }

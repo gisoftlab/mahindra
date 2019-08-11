@@ -24,9 +24,7 @@ class UpdateComment extends FormRequest
     public function rules()
     {
         return [
-            'product_id' => '',
-            'title' => 'max:50',
-            'description' => 'max:500',
+            'content' => 'max:200',
         ];
     }
 }

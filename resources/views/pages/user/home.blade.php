@@ -15,6 +15,10 @@
 
                 @include('panels.welcome-panel')
 
+                @include('products._list', ['products' => $products])
+
+                @include('modals.modal-delete')
+
             </div>
         </div>
     </div>

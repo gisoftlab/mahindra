@@ -31,10 +31,6 @@ Route::group(['middleware' => ['web', 'activity', 'checkblocked']], function () 
     Route::get('/activation', ['as' => 'authenticated.activation-resend', 'uses' => 'Auth\ActivateController@resend']);
     Route::get('/exceeded', ['as' => 'exceeded', 'uses' => 'Auth\ActivateController@exceeded']);
 
-    // Socialite Register Routes
-    Route::get('/social/redirect/{provider}', ['as' => 'social.redirect', 'uses' => 'Auth\SocialController@getSocialRedirect']);
-    Route::get('/social/handle/{provider}', ['as' => 'social.handle', 'uses' => 'Auth\SocialController@getSocialHandle']);
-
     // Route to for user to reactivate their user deleted account.
     Route::get('/re-activate/{token}', ['as' => 'user.reactivate', 'uses' => 'RestoreUserController@userReActivate']);
 });
@@ -52,49 +48,21 @@ Route::group(['middleware' => ['auth', 'activated', 'activity', 'twostep', 'chec
 
     //  Homepage Route - Redirect based on user role is in controller.
     Route::get('/home', ['as' => 'public.home',   'uses' => 'UserController@index']);
-
-    // Show products
-//    Route::get('products', [
-//        'as' => 'products',
-//        'products' => 'ProductsController@index',
-//    ]);
 });
 
 // Registered, activated, and is current user routes.
 Route::group(['middleware' => ['auth', 'activated', 'currentUser', 'activity', 'twostep', 'checkblocked']], function () {
 
-    // Product routes
-    Route::resource(
-        'product',
-        'ProductController', [
-            'only' => [
-                'index',
-                'edit',
-                'update',
-                'create',
-            ],
-        ]
-    );
-//    Route::put('profile/{username}/updateUserAccount', [
-//        'as'   => '{username}',
-//        'uses' => 'ProfilesController@updateUserAccount',
-//    ]);
-//    Route::put('profile/{username}/updateUserPassword', [
-//        'as'   => '{username}',
-//        'uses' => 'ProfilesController@updateUserPassword',
-//    ]);
-//    Route::delete('profile/{username}/deleteUserAccount', [
-//        'as'   => '{username}',
-//        'uses' => 'ProfilesController@deleteUserAccount',
-//    ]);
-//
-//    // Route to show user avatar
-//    Route::get('images/profile/{id}/avatar/{image}', [
-//        'uses' => 'ProfilesController@userProfileAvatar',
-//    ]);
-//
-//    // Route to upload user avatar.
-//    Route::post('avatar/upload', ['as' => 'avatar.upload', 'uses' => 'ProfilesController@upload']);
+
+    Route::get('products/show/{id}', [
+        'as'   => 'products.show',
+        'uses' => 'ProductController@show',
+    ]);
+
+    Route::post('comments/{id}/create', [
+        'as'   => 'comments.user.create',
+        'uses' => 'CommentController@CreateComment',
+    ]);
 });
 
 // Registered, activated, and is admin routes.
@@ -105,7 +73,7 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
         ],
     ]);
 
-    Route::resource('products', 'ProductsController', [
+    Route::resource('products', 'ProductController', [
         'names' => [
             'index'   => 'products',
             'destroy' => 'product.destroy',
@@ -113,6 +81,26 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
         'except' => [
             'deleted',
         ],
+    ]);
+
+    Route::resource('comments', 'CommentController', [
+        'names' => [
+            'index'   => 'comments',
+            'destroy' => 'comments.destroy',
+        ],
+        'except' => [
+            'deleted',
+        ],
+    ]);
+
+    Route::get('comments/approved/{id}', [
+        'as'   => 'comments.approved',
+        'uses' => 'CommentController@approved',
+    ]);
+
+    Route::get('comments/rejected/{id}', [
+        'as'   => 'comments.rejected',
+        'uses' => 'CommentController@rejected',
     ]);
 
     Route::resource('users', 'UsersManagementController', [
@@ -130,5 +118,3 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
     Route::get('routes', 'AdminDetailsController@listRoutes');
     Route::get('active-users', 'AdminDetailsController@activeUsers');
 });
-
-Route::redirect('/php', '/phpinfo', 301);

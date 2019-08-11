@@ -14,6 +14,7 @@ return [
     'editProfile'       => 'Edit Profile',
     'createProfile'     => 'Create Profile',
     'adminDropdownNav'  => 'Admin',
+    'userDropdownNav'  => 'User',
 
     'activation'        => 'Registration Started  | Activation Required',
     'exceeded'          => 'Activation Error',
@@ -31,13 +32,12 @@ return [
     'adminNewComment'      => 'Create New Comment',
 
 
-    'adminThemesList'   => 'Themes',
-    'adminThemesAdd'    => 'Add New Theme',
-
     'adminLogs'         => 'Log Files',
     'adminActivity'     => 'Activity Log',
     'adminPHP'          => 'PHP Information',
     'adminRoutes'       => 'Routing Details',
+
+    'userProductList'     => 'Products',
 
     'activeUsers'       => 'Active Users',
     'laravelBlocker'    => 'Blocker',

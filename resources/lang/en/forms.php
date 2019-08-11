@@ -65,6 +65,8 @@ return [
     'create_user_icon_role'  => 'fa fa-fw fa-shield',
 
     'create_user_button_text' => 'Create New User',
+    'product_button_text' => 'Create New Product',
+    'comment_button_text' => 'Add New Comment',
 
     // EDIT USER AS ADMINISTRATOR FORM
     'edit-user-admin-title' => 'Edit User Information',

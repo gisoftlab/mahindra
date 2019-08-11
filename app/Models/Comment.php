@@ -21,6 +21,9 @@ class Comment extends Model  {
      * @var array
      */
     protected $fillable = [
+        'user_id',
+        'product_id',
+        'seen',
         'content',
     ];
 
@@ -45,9 +48,9 @@ class Comment extends Model  {
     }
 
     /**
-     * Attach product to a  comment
+     * Attach user to a  comment
      *
-     * @param int|Comment $product
+     * @param int|Comment $user
      *
      * @return null|bool
      */

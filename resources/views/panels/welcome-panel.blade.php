@@ -29,15 +29,6 @@
         <h2 class="lead">
             {{ trans('auth.loggedIn') }}
         </h2>
-        <p>
-            <em>Thank you</em> for checking this project out. <strong>Please remember to star it!</strong>
-        </p>
-
-        <p>
-            <small>
-                Users registered via Social providers are by default activated.
-            </small>
-        </p>
 
         <hr>
 
@@ -52,6 +43,10 @@
                     @endrole
                 </strong>
             Access
+        </p>
+
+        <p>
+
         </p>
 
         <hr>

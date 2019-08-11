@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-	{{ $user->name }}'s Profile
+	{{ $product->name }}'s Product
 @endsection
 
 @section('template_fastload_css')
@@ -20,112 +20,47 @@
 			<div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
 				<div class="card">
 					<div class="card-header">
+						<div style="display: flex; justify-content: space-between; align-items: center;">
+							{{ $product->name }}
+							<div class="pull-right">
+								@role('admin', true)
+								<a href="{{ route('products') }}" class="btn btn-light btn-sm float-right" data-toggle="tooltip" data-placement="left" title="{{ trans('product.tooltips.back-products') }}">
+									<i class="fa fa-fw fa-reply-all" aria-hidden="true"></i>
+									{!! trans('product.buttons.back-to-products') !!}
+								</a>
+								@endrole
+								@role('user', true)
+								<a href="{{ route('public.home') }}" class="btn btn-light btn-sm float-right" data-toggle="tooltip" data-placement="left" title="{{ trans('product.tooltips.back-products') }}">
+									<i class="fa fa-fw fa-reply-all" aria-hidden="true"></i>
+									{!! trans('product.buttons.back-to-products') !!}
+								</a>
+								@endrole
 
-						{{ trans('profile.showProfileTitle',['username' => $user->name]) }}
-
+							</div>
+						</div>
 					</div>
 					<div class="card-body">
 
-    					<img src="@if ($user->profile->avatar_status == 1) {{ $user->profile->avatar }} @else {{ Gravatar::get($user->email) }} @endif" alt="{{ $user->name }}" class="user-avatar">
-
-						<dl class="user-info">
+						<dl class="product-info">
 							<dt>
-								{{ trans('profile.showProfileUsername') }}
+								{{ trans('product.show-product.name') }}
 							</dt>
 							<dd>
-								{{ $user->name }}
+								{{ $product->name }}
 							</dd>
 							<dt>
-								{{ trans('profile.showProfileFirstName') }}
+								{{ trans('product.show-product.description') }}
 							</dt>
 							<dd>
-								{{ $user->first_name }}
+								{{ $product->description }}
 							</dd>
-							@if ($user->last_name)
-								<dt>
-									{{ trans('profile.showProfileLastName') }}
-								</dt>
-								<dd>
-									{{ $user->last_name }}
-								</dd>
-							@endif
-
 							<dt>
-								{{ trans('profile.showProfileEmail') }}
+								{{ trans('product.show-product.comments') }}
 							</dt>
 							<dd>
-								{{ $user->email }}
+								@include('products._comment-list', ['comments' => $comments, 'product' => $product])
 							</dd>
-
-							@if ($user->profile)
-
-								@if ($user->profile->theme_id)
-									<dt>
-										{{ trans('profile.showProfileTheme') }}
-									</dt>
-									<dd>
-										{{ $currentTheme->name }}
-									</dd>
-								@endif
-
-								@if ($user->profile->location)
-									<dt>
-										{{ trans('profile.showProfileLocation') }}
-									</dt>
-									<dd>
-										{{ $user->profile->location }} <br />
-
-										@if(config('settings.googleMapsAPIStatus'))
-											Latitude: <span id="latitude"></span> / Longitude: <span id="longitude"></span> <br />
-
-											<div id="map-canvas"></div>
-										@endif
-									</dd>
-								@endif
-
-								@if ($user->profile->bio)
-									<dt>
-										{{ trans('profile.showProfileBio') }}
-									</dt>
-									<dd>
-										{{ $user->profile->bio }}
-									</dd>
-								@endif
-
-								@if ($user->profile->twitter_username)
-									<dt>
-										{{ trans('profile.showProfileTwitterUsername') }}
-									</dt>
-									<dd>
-										{!! HTML::link('https://twitter.com/'.$user->profile->twitter_username, $user->profile->twitter_username, array('class' => 'twitter-link', 'target' => '_blank')) !!}
-									</dd>
-								@endif
-
-								@if ($user->profile->github_username)
-									<dt>
-										{{ trans('profile.showProfileGitHubUsername') }}
-									</dt>
-									<dd>
-										{!! HTML::link('https://github.com/'.$user->profile->github_username, $user->profile->github_username, array('class' => 'github-link', 'target' => '_blank')) !!}
-									</dd>
-								@endif
-							@endif
-
 						</dl>
-
-						@if ($user->profile)
-							@if (Auth::user()->id == $user->id)
-
-								{!! HTML::icon_link(URL::to('/profile/'.Auth::user()->name.'/edit'), 'fa fa-fw fa-cog', trans('titles.editProfile'), array('class' => 'btn btn-small btn-info btn-block')) !!}
-
-							@endif
-						@else
-
-							<p>{{ trans('profile.noProfileYet') }}</p>
-							{!! HTML::icon_link(URL::to('/profile/'.Auth::user()->name.'/edit'), 'fa fa-fw fa-plus ', trans('titles.createProfile'), array('class' => 'btn btn-small btn-info btn-block')) !!}
-
-						@endif
-
 					</div>
 				</div>
 			</div>
@@ -134,9 +69,5 @@
 @endsection
 
 @section('footer_scripts')
-
-	@if(config('settings.googleMapsAPIStatus'))
-		@include('scripts.google-maps-geocode-and-map')
-	@endif
 
 @endsection
